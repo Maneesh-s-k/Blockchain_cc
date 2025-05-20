@@ -8,9 +8,8 @@ const Background = () => {
     <div className="background">
       <Logo/>
       <div className="background-text">
-        <h1>Clean Energy.</h1>
-        <h1>Clear Transactions.</h1>
-        <h1>Better World.</h1>
+        <h1>To a</h1>
+        <h1>Better Future</h1>
       </div>
     </div>
   );
