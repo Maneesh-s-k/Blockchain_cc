@@ -91,7 +91,7 @@ const RightSidebar = (props) => {
         <p>Hello <b>{user?.username || "User"}</b></p>
         <div className="connect-btn">
           <button className={`metamask-button ${isConnected ? "connected" : ""}`} onClick={handleMetamaskLogin}>
-            <img src="https://metamask.io/assets/icon.svg" alt="MetaMask Icon" />
+            <img src="/MetaMask.png" alt="MetaMask Icon" style={{ width: '40px', height: 'auto' }} />
             {isConnected ? "Metamask Connected" : "Connect to MetaMask"}
           </button>
         </div>

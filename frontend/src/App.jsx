@@ -7,7 +7,7 @@ import Dashboard from './components/DashBoardPage/DashBoardPage.jsx';
 import axios from 'axios';
 
 const App = () => {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState({ name: "DevUser" });
   const location = useLocation(); // Hook to get the current location
 
   const getUser = async () => {
@@ -22,10 +22,10 @@ const App = () => {
     }
   };
 
-  useEffect(() => {
-    // Call getUser whenever the route changes
-    getUser();
-  }, [location]); // Dependency array includes location to trigger on route changes
+  // useEffect(() => {
+  //   // Call getUser whenever the route changes
+  //   getUser();
+  // }, [location]); // Dependency array includes location to trigger on route changes
 
   return (
     <Routes>
