@@ -180,7 +180,15 @@ const Sidebar = (props) => {
                 className={`sidebar-item ${
                   activeItem === item.id ? "active" : ""
                 }`}
-                onClick={() => setActiveItem(item.id)}
+                onClick={() => {
+                  setActiveItem(item.id);
+                  // if (item.id === "Dashboard") navigate("/dashboard");
+                  // if (item.id === "Energy Exchange") navigate("/energy-exchange");
+                  // if (item.id === "Payments") navigate("/payments");
+                  // if (item.id === "History") navigate("/history");
+                  if (item.id === "Settings") navigate("/settings"); // <-- Add this line
+                }}
+
               >
                 <span className="icon">{item.icon}</span>{" "}
                 <span className="label">{item.label}</span>

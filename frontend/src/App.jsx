@@ -5,6 +5,9 @@ import CreateAccount from './components/AuthPage/CreateAccount.jsx';
 import Verify from './components/AuthPage/Verify.jsx';
 import Dashboard from './components/DashBoardPage/DashBoardPage.jsx';
 import axios from 'axios';
+import Settings from "./components/Settings.jsx"; // Adjust path if needed
+
+
 
 const App = () => {
   const [user, setUser] = useState({ name: "DevUser" });
@@ -21,7 +24,17 @@ const App = () => {
       // console.log(err);
     }
   };
+  const [darkMode, setDarkMode] = useState(() => {
+    // Check localStorage or system preference on first load
+    const stored = localStorage.getItem("darkMode");
+    if (stored !== null) return stored === "true";
+    return window.matchMedia("(prefers-color-scheme: dark)").matches;
+  });
 
+  useEffect(() => {
+    document.body.className = darkMode ? "dark-mode" : "light-mode";
+    localStorage.setItem("darkMode", darkMode);
+  }, [darkMode]);
   // useEffect(() => {
   //   // Call getUser whenever the route changes
   //   getUser();
@@ -33,6 +46,8 @@ const App = () => {
       <Route exact path="/dashboard" element={user ? <Dashboard userData={user} /> : <Navigate to="/" />} />
       <Route exact path="/signup" element={user ? <Navigate to="/dashboard" /> : <CreateAccount />} />
       <Route exact path="/verify" element={<Verify />} />
+      <Route path="/settings" element={<Settings darkMode={darkMode} setDarkMode={setDarkMode} />} />
+
     </Routes>
   );
 };

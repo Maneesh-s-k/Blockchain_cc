@@ -60,3 +60,23 @@ body{
       background-color: #f9f9f9;
     }
   } 
+
+  /* body.light-mode {
+  background-color: #fff;
+  color: #222;
+}
+
+body.dark-mode {
+  background-color: #242424;
+  color: #fff;
+} */
+
+/* Optional: ensure settings and dashboard content also update
+body.dark-mode .settings-page,
+body.dark-mode .dashboard-page,
+body.dark-mode .rightsidebar,
+body.dark-mode .card1,
+body.dark-mode .card2 {
+  background-color: #242424 !important;
+  color: #fff !important;
+} */
