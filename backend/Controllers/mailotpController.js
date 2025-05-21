@@ -1,7 +1,7 @@
 const sgMail = require('@sendgrid/mail');
 const twilio = require('twilio');
 
-sgMail.setApiKey(process.env.SENDGRID_API_KEY); // Fixed environment variable name
+sgMail.setApiKey(process.env.SENDGRID_API_KEY); // Set your SendGrid API key
 const otpStore = new Map(); // Email OTP storage
 const otpStoreSms = new Map(); // SMS OTP storage
 
@@ -45,20 +45,22 @@ const mailotp = async (req, res) => {
     const emailOtp = generateOtp();
     const smsOtp = generateOtp();
 
-    // Send Email OTP
-    const emailBody = `<h2>Your OTP is</h2><p>${emailOtp}</p>`;
+    // --- Send Email OTP using SendGrid Dynamic Template ---
     const emailMsg = {
       to: email,
-      from: 'robertpattinson69996@gmail.com',
-      subject: 'OTP for Verification',
-      html: emailBody,
+      from: 'robertpattinson69996@gmail.com', // Use your verified sender
+      templateId: process.env.SENDGRID_TEMPLATE_ID, // <-- Set this in your .env!
+      dynamic_template_data: {
+        otp: emailOtp,
+        username: email.split('@')[0] // Or use actual username if available
+      },
     };
 
     await sgMail.send(emailMsg);
     storeOtp(otpStore, email, emailOtp);
     console.log(`Email OTP sent to ${email}: ${emailOtp}`);
 
-    // Send SMS OTP
+    // --- Send SMS OTP ---
     const smsMessage = `Your OTP is: ${smsOtp}`;
     await client.messages.create({
       body: smsMessage,
@@ -87,13 +89,13 @@ const verifyOtp = (req, res) => {
     // Validate SMS OTP
     const smsValidation = validateOtp(otpStoreSms, telephone, otpsms);
     if (!smsValidation.success) {
-      return res.status(400).json({ error: smsValidation.error,message:"Invalid OTP" });
+      return res.status(400).json({ error: smsValidation.error, message: "Invalid OTP" });
     }
 
     // Validate Email OTP
     const emailValidation = validateOtp(otpStore, email, otpmail);
     if (!emailValidation.success) {
-      return res.status(400).json({ error: emailValidation.error ,message:"Invalid OTP"});
+      return res.status(400).json({ error: emailValidation.error, message: "Invalid OTP" });
     }
 
     console.log(`OTP verified for email: ${email} and telephone: ${telephone}`);
